@@ -7,21 +7,28 @@ using System.Windows.Forms;
 /* Name: Tom Tsiliopoulos
  * Date: August 3, 2017
  * Description: A calculator app with Windows Forms
- * Version: 0.2 - Changed class to start SplashForm first
+ * Version: 0.3 - Refactored Main to instantiate CalculatorForm object
+ * after Enabling Visual Styles.
  */
 
 namespace COMP123_S2017_Lesson12A2
 {
-    static class Program
+    public static class Program
     {
+        // FORM INSTANTIATION
+        public static CalculatorForm calculatorForm;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        public static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            calculatorForm = new CalculatorForm();
+
             Application.Run(new SplashForm());
         }
     }
