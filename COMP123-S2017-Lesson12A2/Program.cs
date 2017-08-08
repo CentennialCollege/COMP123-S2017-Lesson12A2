@@ -27,7 +27,7 @@ namespace COMP123_S2017_Lesson12A2
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            calculatorForm = new CalculatorForm();
+            calculatorForm = new CalculatorForm(); // instantiates object of type Calculator Form
 
             Application.Run(new SplashForm());
         }
