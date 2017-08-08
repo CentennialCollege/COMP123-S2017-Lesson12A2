@@ -7,7 +7,7 @@ using System.Windows.Forms;
 /* Name: Tom Tsiliopoulos
  * Date: August 3, 2017
  * Description: A calculator app with Windows Forms
- * Version: 0.1
+ * Version: 0.2 - Changed class to start SplashForm first
  */
 
 namespace COMP123_S2017_Lesson12A2
@@ -22,7 +22,7 @@ namespace COMP123_S2017_Lesson12A2
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Calculator());
+            Application.Run(new SplashForm());
         }
     }
 }
