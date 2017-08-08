@@ -12,7 +12,7 @@ using System.Windows.Forms;
 /* Name: Tom Tsiliopoulos
  * Date: August 3, 2017
  * Description: A calculator app with Windows Forms
- * Version: 0.4 - Added the private _clear method that resets the calculator
+ * Version: 0.5 - Refactored the CalculatorButton_Click event
  */
 
 namespace COMP123_S2017_Lesson12A2
@@ -76,7 +76,15 @@ namespace COMP123_S2017_Lesson12A2
                 this.IsDecimalClicked = true;
             }
 
-            ResultTextBox.Text += buttonClicked.Text;
+            if(ResultTextBox.Text == "0")
+            {
+                ResultTextBox.Text = buttonClicked.Text;
+            }
+            else
+            {
+                ResultTextBox.Text += buttonClicked.Text;
+            }
+
 
             //Debug.WriteLine("Calculator Button Clicked");
         }
@@ -104,7 +112,7 @@ namespace COMP123_S2017_Lesson12A2
         private void _clear()
         {
             this.IsDecimalClicked = false;
-            this.ResultTextBox.Clear();
+            this.ResultTextBox.Text = "0";
         }
 
         /// <summary>
