@@ -12,7 +12,7 @@ using System.Windows.Forms;
 /* Name: Tom Tsiliopoulos
  * Date: August 3, 2017
  * Description: A calculator app with Windows Forms
- * Version: 0.6 - Refactored the CalculatorButton_Click event again
+ * Version: 0.7 - Added operand and result properties 
  */
 
 namespace COMP123_S2017_Lesson12A2
@@ -21,6 +21,9 @@ namespace COMP123_S2017_Lesson12A2
     {
         // PRIVATE INSTANCE VARIABLES
         private bool _isDecimalClicked;
+        private double _firstOperand;
+        private double _secondOperand;
+        private double _result;
 
         // PUBLIC PROPERTIES +++++++++++++++++++++++++++++++
         public bool IsDecimalClicked
@@ -34,6 +37,50 @@ namespace COMP123_S2017_Lesson12A2
             {
                 this._isDecimalClicked = value;
             }
+        }
+
+        public double FirstOperand {
+
+            get
+            {
+                return this._firstOperand;
+            }
+
+            set
+            {
+                this._firstOperand = value;
+            }
+
+        }
+
+        public double SecondOperand
+        {
+
+            get
+            {
+                return this._secondOperand;
+            }
+
+            set
+            {
+                this._secondOperand = value;
+            }
+
+        }
+
+        public double Result
+        {
+
+            get
+            {
+                return this._result;
+            }
+
+            set
+            {
+                this._result = value;
+            }
+
         }
 
         // CONSTRUCTORS +++++++++++++++++++++++++++++++++++++++
