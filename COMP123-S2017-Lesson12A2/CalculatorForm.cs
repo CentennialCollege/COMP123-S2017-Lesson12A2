@@ -12,7 +12,7 @@ using System.Windows.Forms;
 /* Name: Tom Tsiliopoulos
  * Date: August 3, 2017
  * Description: A calculator app with Windows Forms
- * Version: 0.7 - Added operand and result properties 
+ * Version: 0.8 - Added Multiple Calculator methods
  */
 
 namespace COMP123_S2017_Lesson12A2
@@ -24,6 +24,10 @@ namespace COMP123_S2017_Lesson12A2
         private double _firstOperand;
         private double _secondOperand;
         private double _result;
+
+        private List<double> _operandList;
+
+        private string _currentOperator;
 
         // PUBLIC PROPERTIES +++++++++++++++++++++++++++++++
         public bool IsDecimalClicked
@@ -83,6 +87,33 @@ namespace COMP123_S2017_Lesson12A2
 
         }
 
+        public List<double> OperandList {
+
+            get
+            {
+                return this._operandList;
+            }
+
+            set
+            {
+                this._operandList = value;
+            }
+
+        }
+
+        public string CurrentOperator
+        {
+            get
+            {
+                return this._currentOperator;
+            }
+
+            set
+            {
+                this._currentOperator = value;
+            }
+        }
+
         // CONSTRUCTORS +++++++++++++++++++++++++++++++++++++++
 
         /// <summary>
@@ -136,7 +167,14 @@ namespace COMP123_S2017_Lesson12A2
             }
             else
             {
-                ResultTextBox.Text += calculatorButton.Text;
+                if(OperandList.Count > 0)
+                {
+                    ResultTextBox.Text = calculatorButton.Text;
+                }
+                else
+                {
+                    ResultTextBox.Text += calculatorButton.Text;
+                }
             }
 
 
@@ -151,13 +189,104 @@ namespace COMP123_S2017_Lesson12A2
         private void OperatorButton_Click(object sender, EventArgs e)
         {
             Button operatorButton = sender as Button;
+            double operand = 0;
+
+            if((operatorButton.Text != "C") && (operatorButton.Text != "⌫"))
+            {
+               operand = this._covertResult(ResultTextBox.Text);
+            }
+
 
             switch (operatorButton.Text)
             {
                 case "C":
                     this._clear();
                     break;
+                case "=":
+                    this._showResult(operand);
+                    break;
+                default:
+                    this.CurrentOperator = operatorButton.Text;
+                    this._calculate(operand, operatorButton.Text);
+                    break;
             }
+        }
+
+        /// <summary>
+        /// This method displays the result in the ResultTextBox
+        /// </summary>
+        /// <returns></returns>
+        private void _showResult(double operand)
+        {
+
+            Debug.WriteLine("OperandList Count: " + OperandList.Count);
+            if(OperandList.Count > 0)
+            {
+                OperandList.Add(operand);
+                this._calculate(operand, "=");
+            }
+
+
+            ResultTextBox.Text = this.Result.ToString();
+        }
+
+        /// <summary>
+        /// This method converts the string result of the ResultTextBox into a number
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        private double _covertResult(string resultString)
+        {
+            try
+            {
+                return Convert.ToDouble(resultString);
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine("An Error Occurred");
+                Debug.WriteLine(exception.Message);
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// This method sets operand1 as the first operand of the operation
+        /// </summary>
+        private void _calculate(double operand, string operatorString)
+        {
+            if(OperandList.Count > 1)
+            {
+                double result = 0;
+                if(operatorString == "=")
+                {
+                    operatorString = this.CurrentOperator;
+                }
+
+                Debug.WriteLine("Current Operator: " + CurrentOperator);
+
+
+                switch (operatorString)
+                {
+                    case "+":
+
+                        result = OperandList[0] + OperandList[1];
+                        break;
+                    case "-":
+
+                        result = OperandList[0] - OperandList[1];
+                        break;
+                }
+
+
+                OperandList.Clear();
+                this.OperandList.Add(result);
+                this.Result = result;
+            }
+            else
+            {
+                this.OperandList.Add(operand);
+            }
+
         }
 
         /// <summary>
@@ -167,6 +296,8 @@ namespace COMP123_S2017_Lesson12A2
         {
             this.IsDecimalClicked = false;
             this.ResultTextBox.Text = "0";
+            this.OperandList = new List<double>(); // create new list
+            this.CurrentOperator = "C";
         }
 
         /// <summary>
