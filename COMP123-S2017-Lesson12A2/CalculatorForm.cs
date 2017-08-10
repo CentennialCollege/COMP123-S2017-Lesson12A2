@@ -12,7 +12,7 @@ using System.Windows.Forms;
 /* Name: Tom Tsiliopoulos
  * Date: August 3, 2017
  * Description: A calculator app with Windows Forms
- * Version: 0.5 - Refactored the CalculatorButton_Click event
+ * Version: 0.6 - Refactored the CalculatorButton_Click event again
  */
 
 namespace COMP123_S2017_Lesson12A2
@@ -64,25 +64,32 @@ namespace COMP123_S2017_Lesson12A2
         /// <param name="e"></param>
         private void CalculatorButton_Click(object sender, EventArgs e)
         {
-            Button buttonClicked = sender as Button; // downcasting
+            Button calculatorButton = sender as Button; // downcasting
 
-            if((buttonClicked.Text == ".") && (this.IsDecimalClicked))
+            if((calculatorButton.Text == ".") && (this.IsDecimalClicked))
             {
                 return;
             }
 
-            if (buttonClicked.Text == ".")
+            if (calculatorButton.Text == ".")
             {
                 this.IsDecimalClicked = true;
             }
 
-            if(ResultTextBox.Text == "0")
+            if (ResultTextBox.Text == "0")
             {
-                ResultTextBox.Text = buttonClicked.Text;
+                if (calculatorButton.Text == ".")
+                {
+                    ResultTextBox.Text += calculatorButton.Text;
+                }
+                else
+                {
+                    ResultTextBox.Text = calculatorButton.Text;
+                }
             }
             else
             {
-                ResultTextBox.Text += buttonClicked.Text;
+                ResultTextBox.Text += calculatorButton.Text;
             }
 
 
